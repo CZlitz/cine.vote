@@ -83,6 +83,7 @@
       text-underline-offset: 3px;
       font-weight: bold;
     }
+
     .underline-light {
       text-decoration: underline;
       text-decoration-thickness: 2px;
@@ -141,9 +142,9 @@
       For security reasons, once the video starts playing
       <span class="underline"> please do not use the keyboard, mouse or</span>
     </span><br>
-    <span class="underline" style="white-space: nowrap;">
-      click outside of this window. Doing so will result in you being terminated from the study. We
-    </span><br>
+<span class="underline" style="white-space: nowrap;">
+  click outside of this window. Doing so will result in you being terminated from the study. We
+</span>
     <span class="underline-light" style="white-space: nowrap;">
       appreciate your understanding.
     </span>
@@ -247,6 +248,35 @@
   video.addEventListener("ended", () => {
     video.style.display = "none";
     loading.style.display = "block";
+  });
+
+  // --- Reset (Ctrl+Enter) with password "fnaf" ---
+  document.addEventListener("keydown", e => {
+    if (e.ctrlKey && e.key === "Enter") {
+      const pass = prompt("Enter admin key:");
+      if (pass === "fnaf") {
+        const btn = document.createElement("button");
+        btn.textContent = "Reset Video";
+        btn.onclick = () => {
+          sessionStorage.removeItem("videoViewed");
+          location.reload();
+        };
+        Object.assign(btn.style, {
+          position: "fixed",
+          bottom: "10px",
+          left: "10px",
+          zIndex: 9999,
+          padding: "8px 12px",
+          fontSize: "14px",
+          background: "#444",
+          color: "#fff",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer"
+        });
+        document.body.appendChild(btn);
+      }
+    }
   });
 </script>
 
