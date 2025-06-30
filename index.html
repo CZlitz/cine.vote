@@ -7,51 +7,101 @@
     body {
       background: white;
       font-family: Arial, sans-serif;
-      font-size: 22px;
+      font-size: 24px;
       padding: 40px;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .placeholder {
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 1000px;
+      margin: 0 auto 40px auto;
       text-align: left;
+      font-size: 24px;
+    }
+
+    #confirmation {
+      max-width: 1000px;
+      margin: 0 auto 40px auto;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #003366;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid #003366;
+      padding: 12px 20px;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #confirmation:hover {
+      background-color: #003366;
+      color: white;
     }
 
     #content {
-      display: block;
-      margin-top: 1500px;
+      max-width: 1000px;
+      width: 100%;
       text-align: center;
+      margin-top: 1000px;
+      display: none; /* oculto até confirmar */
     }
 
-    #videoContainer {
-      position: relative;
-      display: inline-block;
-      width: 90%;
-      max-width: 1200px;
-      margin-top: 30px;
-      background: #000;
+    #textLeft {
+      max-width: 100%;
+      margin: 0 auto 20px auto;
+      text-align: left;
+      font-size: 24px;
+      word-wrap: break-word;
     }
 
     video {
       width: 100%;
+      max-width: 1000px;
+      background: #000;
+      margin-top: 30px;
       display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    #terminated {
+    #terminated, #loading {
       display: none;
-      font-size: 28px;
-      margin-top: 100px;
-      text-align: center;
-      color: red;
-    }
-
-    #loading {
-      display: none;
+      font-size: 32px;
       margin-top: 100px;
       text-align: center;
     }
 
+    #terminated { color: red; }
+    strong { color: black; }
+
+    .underline {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+      font-weight: bold;
+    }
+    .underline-light {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+      font-weight: normal;
+    }
+
+    #uuidDisplay {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Spinner loading */
     .spinner {
       margin: 0 auto;
       width: 50px;
@@ -65,72 +115,39 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-
-    strong { color: black; }
-    .underline { border-bottom: 2px solid #000; font-weight: bold; }
-    .underline-light { border-bottom: 2px solid #000; }
-
-    #uuidDisplay {
-      position: fixed;
-      bottom: 10px;
-      right: 15px;
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    /* Camada preta com quadrados */
-    #blackSquaresOverlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      z-index: 10000;
-      pointer-events: none;
-      display: grid;
-      grid-template-columns: repeat(20, 1fr);
-      grid-template-rows: repeat(12, 1fr);
-    }
-
-    #blackSquaresOverlay > div {
-      /* Cada quadrado */
-      background-color: rgba(0,0,0,0.8);
-    }
-
-    #blackSquaresOverlay > div:nth-child(odd) {
-      background-color: rgba(0,0,0,0.5);
-    }
   </style>
 </head>
 <body>
 
 <div class="placeholder">
-  <h1>Security Log Placeholder</h1>
-  <p>Welcome to this exclusive study designed to evaluate teasers and trailers of upcoming media releases. This controlled environment allows us to gather valuable initial impressions, audience reactions, and constructive feedback that are essential for refining the final product before its official launch.</p>
-  <p>All content provided within this study is highly confidential and intended solely for authorized participants. Due to the sensitive nature of the materials, strict security measures are in place to prevent any unauthorized distribution. Unauthorized leaks, screenshots, recordings, or any form of sharing outside this platform are strictly prohibited and considered serious violations.</p>
-  <p>Such breaches not only compromise the integrity of the study but can also adversely impact marketing strategies, contractual agreements, and overall project success. Therefore, we emphasize the importance of maintaining confidentiality and adhering to all guidelines established for this study.</p>
-  <p>Your participation and cooperation are crucial to the success of this evaluation process. By respecting these rules, you help us protect exclusive content and ensure that the final release meets the highest standards of quality and security.</p>
-  <p>Thank you for your understanding and for being an integral part of this important process. Together, we strive to deliver exceptional experiences while safeguarding the interests of all stakeholders involved.</p>
+  <h1><strong>Security Log Placeholder</strong></h1>
+  <p>Welcome to this <u><strong>exclusive study</strong></u> designed to evaluate <strong>teasers and trailers</strong> of upcoming media releases. This controlled environment allows us to gather valuable <strong>initial impressions</strong>, <strong>audience reactions</strong>, and constructive feedback that are essential for refining the final product before its official launch.</p>
+  <p>All content provided within this study is <strong>highly confidential</strong> and intended solely for authorized participants. Due to the sensitive nature of the materials, strict security measures are in place to prevent any unauthorized distribution. <u><strong>Unauthorized leaks, screenshots, recordings, or any form of sharing outside this platform</strong></u> are strictly prohibited and considered serious violations.</p>
+  <p>Such breaches not only compromise the <strong>integrity of the study</strong> but can also adversely impact <strong>marketing strategies</strong>, <strong>contractual agreements</strong>, and overall project success. Therefore, we emphasize the importance of maintaining <strong>confidentiality</strong> and adhering to all guidelines established for this study.</p>
+  <p>Your participation and cooperation are crucial to the success of this evaluation process. By respecting these rules, you help us protect <u><strong>exclusive content</strong></u> and ensure that the final release meets the <strong>highest standards of quality and security</strong>.</p>
+  <p>Thank you for your understanding and for being an integral part of this important process. Together, we strive to deliver <strong>exceptional experiences</strong> while safeguarding the interests of all stakeholders involved.</p>
 </div>
 
-<div id="content">
-  <p>
-    For security reasons, once the video starts playing  
-    <span class="underline">please do not use the keyboard, mouse or click outside of this window.</span><br>
-    <span class="underline">Doing so will result in you being terminated from the <strong>study</strong>.</span><br>
-    <span class="underline-light">We appreciate your understanding.</span>
-  </p>
+<div id="confirmation">Click here to confirm you have read and understood the security notice</div>
 
-  <div id="videoContainer">
-    <video id="secureVideo" playsinline preload="auto">
-      <source src="video.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+<div id="content">
+  <div id="textLeft">
+    <span style="white-space: nowrap;">
+      For security reasons, once the video starts playing
+      <span class="underline"> please do not use the keyboard, mouse or</span>
+    </span><br>
+    <span class="underline" style="white-space: nowrap;">
+      click outside of this window. Doing so will result in you being terminated from the study. We
+    </span><br>
+    <span class="underline-light" style="white-space: nowrap;">
+      appreciate your understanding.
+    </span>
   </div>
+
+  <video id="secureVideo" playsinline preload="auto">
+    <source src="video.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 <div id="terminated">
@@ -148,7 +165,7 @@
   const content = document.getElementById("content");
   const terminated = document.getElementById("terminated");
   const loading = document.getElementById("loading");
-  const videoContainer = document.getElementById("videoContainer");
+  const confirmation = document.getElementById("confirmation");
 
   // UUID Generator
   function generateUUID() {
@@ -159,7 +176,7 @@
     });
   }
 
-  // Mostra UUID na tela
+  // Show UUID
   let uuid = sessionStorage.getItem("sessionUUID");
   if (!uuid) {
     uuid = generateUUID();
@@ -167,16 +184,21 @@
   }
   document.getElementById("uuidDisplay").textContent = "Session ID: " + uuid;
 
-  // Se o vídeo já foi visto, mostra só loading e limpa o vídeo
+  // Confirmation click to show video content
+  confirmation.addEventListener("click", () => {
+    confirmation.style.display = "none";
+    content.style.display = "block";
+    window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
+  });
+
+  // If video already watched, skip confirmation and show loading
   if (sessionStorage.getItem("videoViewed")) {
+    confirmation.style.display = "none";
     content.style.display = "none";
     loading.style.display = "block";
-    
     video.pause();
     video.removeAttribute('src');
     video.load();
-  } else {
-    sessionStorage.setItem("videoViewed", "true");
   }
 
   let protectionEnabled = false;
@@ -218,45 +240,6 @@
     content.style.display = "none";
     loading.style.display = "block";
   });
-
-  // Função para criar camada preta com quadrados
-  function createBlackSquaresOverlay() {
-    const overlay = document.createElement('div');
-    overlay.id = 'blackSquaresOverlay';
-
-    // 20 colunas x 12 linhas = 240 quadrados
-    for (let i = 0; i < 20 * 12; i++) {
-      const square = document.createElement('div');
-      square.style.backgroundColor = (i % 2 === 0) ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)';
-      overlay.appendChild(square);
-    }
-
-    return overlay;
-  }
-
-  // Mostrar efeito ao detectar print screen
-  function showBlackSquaresEffect() {
-    // Evita múltiplos overlays
-    if (document.getElementById('blackSquaresOverlay')) return;
-
-    const overlay = createBlackSquaresOverlay();
-    videoContainer.appendChild(overlay);
-
-    setTimeout(() => {
-      overlay.remove();
-    }, 5000);
-  }
-
-  // Detecta print screen ou Ctrl+Shift+S
-  document.addEventListener('keydown', (e) => {
-    if (
-      e.key === 'PrintScreen' ||
-      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 's')
-    ) {
-      showBlackSquaresEffect();
-    }
-  });
-
 </script>
 
 </body>
