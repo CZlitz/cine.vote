@@ -46,7 +46,7 @@
       width: 100%;
       text-align: center;
       margin-top: 1000px;
-      display: none; /* oculto até confirmar */
+      display: none;
     }
 
     #textLeft {
@@ -67,14 +67,14 @@
       margin-right: auto;
     }
 
-    #terminated, #loading {
+    #terminated {
       display: none;
       font-size: 32px;
       margin-top: 100px;
       text-align: center;
+      color: red;
     }
 
-    #terminated { color: red; }
     strong { color: black; }
 
     .underline {
@@ -102,12 +102,17 @@
     }
 
     /* Spinner loading */
+    #loading {
+      display: none;
+      margin-top: 20px;
+    }
+
     .spinner {
-      margin: 0 auto;
+      margin: 30px auto;
       width: 50px;
       height: 50px;
       border: 6px solid #ccc;
-      border-top-color: #000;
+      border-top-color: #007bff;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -148,14 +153,14 @@
     <source src="video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+
+  <div id="loading">
+    <div class="spinner"></div>
+  </div>
 </div>
 
 <div id="terminated">
   <p><strong>SESSION TERMINATED</strong><br />Unauthorized input detected.</p>
-</div>
-
-<div id="loading">
-  <div class="spinner"></div>
 </div>
 
 <div id="uuidDisplay"></div>
@@ -191,14 +196,17 @@
     window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
   });
 
-  // If video already watched, skip confirmation and show loading
+  // If video already watched, hide video but keep text and show spinner
   if (sessionStorage.getItem("videoViewed")) {
-    confirmation.style.display = "none";
-    content.style.display = "none";
-    loading.style.display = "block";
     video.pause();
     video.removeAttribute('src');
     video.load();
+    video.style.display = "none";
+    loading.style.display = "block";
+    confirmation.style.display = "none";
+    content.style.display = "block";
+  } else {
+    sessionStorage.setItem("videoViewed", "true");
   }
 
   let protectionEnabled = false;
@@ -228,8 +236,8 @@
     video.src = "";
     video.load();
 
-    content.style.display = "none";
-    terminated.style.display = "block";
+    video.style.display = "none";
+    loading.style.display = "block";
   }
 
   ["mousemove", "keydown", "click"].forEach(eventType => {
@@ -237,7 +245,7 @@
   });
 
   video.addEventListener("ended", () => {
-    content.style.display = "none";
+    video.style.display = "none";
     loading.style.display = "block";
   });
 </script>
